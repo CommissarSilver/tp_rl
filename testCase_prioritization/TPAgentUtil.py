@@ -32,7 +32,8 @@ class TPAgentUtil:
             # prioritized_replay_beta0: initial value of beta for prioritized replay buffer
             # prioritized_replay_beta_iters: (int) number of iterations over which beta will be annealed from initial value to 1.0. If set to None equals to max_timesteps.
             # prioritized_replay_eps: epsilon to add to the TD errors when updating priorities.
-            # ======================= HYPER-PARAMS =======================from stable_baselines import DQN
+            # ======================= HYPER-PARAMS =======================
+            from stable_baselines import DQN
             from stable_baselines.deepq.policies import MlpPolicy
 
             model = DQN(MlpPolicy,
