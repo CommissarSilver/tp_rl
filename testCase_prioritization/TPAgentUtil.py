@@ -4,6 +4,8 @@ from stable_baselines.common.vec_env import DummyVecEnv
 import numpy as np
 
 from PairWiseEnv import CIPairWiseEnv
+# !!! PAY HEED BROTHER: The documentation for these algorithms can be found at: https://stable-baselines.readthedocs.io/en/master/index.html
+# !!! For each algorithm, the hyperparameters and their default values are outlines
 
 
 class TPAgentUtil:
@@ -17,8 +19,22 @@ class TPAgentUtil:
         assert TPAgentUtil.supported_algo.count(algo.upper()) == 1, "The algorithms  is not supported for" \
                                                                     " pairwise formalization"
         if algo.upper() == "DQN":
-            from stable_baselines import DQN
+            # ======================= HYPER-PARAMS =======================
+            # gamma: discount factor
+            # learning_rate: learning rate
+            # exploration_fraction: fraction of entire training period over which the exploration rate is annealed
+            # exploration_final_eps: final value of random action probability
+            # exploration_initial_eps: initial value of random action probability
+            # train_freq: (int) update the model every train_freq steps. set to None to disable printing
+            # learning_starts: (int) how many steps of the model to collect transitions for before learning starts
+            # target_network_update_freq: (int) update the target network every target_network_update_freq steps.
+            # prioritized_replay_alpha: alpha parameter for prioritized replay buffer. It determines how much prioritization is used, with alpha=0 corresponding to the uniform case.
+            # prioritized_replay_beta0: initial value of beta for prioritized replay buffer
+            # prioritized_replay_beta_iters: (int) number of iterations over which beta will be annealed from initial value to 1.0. If set to None equals to max_timesteps.
+            # prioritized_replay_eps: epsilon to add to the TD errors when updating priorities.
+            # ======================= HYPER-PARAMS =======================from stable_baselines import DQN
             from stable_baselines.deepq.policies import MlpPolicy
+
             model = DQN(MlpPolicy,
                         env,
                         gamma=0.90,
@@ -46,17 +62,47 @@ class TPAgentUtil:
                         full_tensorboard_log=False,
                         seed=None)
         elif algo.upper() == "PPO2":
+            # ======================= HYPER-PARAMS =======================
+            # gamma: discount factor
+            # learning_rate: learning rate
+            # n_steps: (int) The number of steps to run for each environment per update (i.e. batch size is n_steps * n_env where n_env is number of environment copies running in parallel)
+            # ent_coef: (float) Entropy coefficient for the loss calculation
+            # vf_coef: (float) Value function coefficient for the loss calculation
+            # max_grad_norm: (float) The maximum value for the gradient clipping
+            # noptepochs: (int) Number of epoch when optimizing the surrogate
+            # ======================= HYPER-PARAMS =======================
             from stable_baselines.common.policies import MlpPolicy
             from stable_baselines.ppo2 import PPO2
             env = DummyVecEnv([lambda: env])
             model = PPO2(MlpPolicy, env, verbose=0)
         elif algo.upper() == "TD3":
+            # ======================= HYPER-PARAMS =======================
+            # gamma: discount factor
+            # learning_rate: learning rate
+            # tau: (float) the soft update coefficient (“polyak update” of the target networks, between 0 and 1)
+            # policy_delay: (int) Policy and target networks will only be updated once every policy_delay steps per training steps. The Q values will be updated policy_delay more often (update every training step).
+            # target_policy_noise: (float) Standard deviation of Gaussian noise added to target policy (smoothing noise)
+            # target_noise_clip: (float) Limit for absolute value of target policy smoothing noise.
+            # train_freq: (int) Update the model every train_freq steps.
+            # gradient_steps: (int) How many gradient update after each step
+            # random_exploration: (float) Probability of taking a random action (as in an epsilon-greedy strategy) This is not needed for TD3 normally but can help exploring when using HER + TD3. This hack was present in the original OpenAI Baselines repo (DDPG + HER)
+            # ======================= HYPER-PARAMS =======================
             from stable_baselines import TD3
             from stable_baselines.td3.policies import MlpPolicy
             env = DummyVecEnv([lambda: env])
             model = TD3(MlpPolicy, env, verbose=0)
-
         elif algo.upper() == "A2C":
+            # ======================= HYPER-PARAMS =======================
+            # gamma: discount factor
+            # learning_rate: learning rate
+            # vf_coef: (float) Value function coefficient for the loss calculation
+            # ent_coef: (float) Entropy coefficient for the loss calculation
+            # max_grad_norm: (float) The maximum value for the gradient clipping
+            # alpha: (float) RMSProp decay parameter (default: 0.99)
+            # momentum: (float) RMSProp momentum parameter (default: 0.0)
+            # epsilon: (float) RMSProp epsilon (stabilizes square root computation in denominator of RMSProp update) (default: 1e-5)
+            # lr_schedule: (str) The type of scheduler for the learning rate update (‘linear’, ‘constant’, ‘double_linear_con’, ‘middle_drop’ or ‘double_middle_drop’)
+            # ======================= HYPER-PARAMS =======================
             from stable_baselines.common.policies import MlpPolicy
             from stable_baselines.a2c import A2C
             env = DummyVecEnv([lambda: env])
