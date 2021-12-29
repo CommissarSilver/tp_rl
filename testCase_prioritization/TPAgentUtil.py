@@ -5,7 +5,7 @@ import numpy as np
 
 from PairWiseEnv import CIPairWiseEnv
 # !!! PAY HEED BROTHER: The documentation for these algorithms can be found at: https://stable-baselines.readthedocs.io/en/master/index.html
-# !!! For each algorithm, the hyperparameters and their default values are outlines
+# !!! For each algorithm, the hyperparameters and their default values are outlined
 
 
 class TPAgentUtil:
