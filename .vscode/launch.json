@@ -7,7 +7,7 @@
             "request": "launch",
             "program": "${file}",
             "console": "integratedTerminal",
-            "args": ["-m", "pointwise", "-a", "ACKTR", "-t", ".\\data\\iofrol-additional-features.csv", "-e", "200", "-w", "10", "-d", "simple"]
+            "args": ["-m", "pairwise", "-a", "DQN", "-t", ".\\data\\iofrol-additional-features.csv", "-e", "200", "-w", "10", "-d", "simple"]
             
         }
     ]
